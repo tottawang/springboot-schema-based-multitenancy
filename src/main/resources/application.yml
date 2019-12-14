@@ -1,0 +1,12 @@
+multitenant:
+  tenantKey: X-Person-Tenant
+  defaultTenant: github
+spring:
+  datasource:
+      url: jdbc:postgresql://localhost:5432/dms_seleniumschema
+      username: admin
+      password: admin
+      driverClassName: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
