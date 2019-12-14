@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-public class SampleConfiguration {
+public class SampleApplicationConfiguration {
 
   @Autowired
   AutowireCapableBeanFactory beanFactory;
@@ -29,5 +29,5 @@ public class SampleConfiguration {
     registration.addUrlPatterns("/*");
     return registration;
   }
-
 }
+

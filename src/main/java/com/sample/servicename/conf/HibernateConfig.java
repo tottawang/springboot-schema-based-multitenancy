@@ -23,7 +23,7 @@ public class HibernateConfig {
       CurrentTenantIdentifierResolver tenantIdentifierResolver) {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource);
-    em.setPackagesToScan("com.sample.servicname.entity");
+    em.setPackagesToScan("com.sample");
     em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
     Map<String, Object> jpaProperties = new HashMap<>();
     jpaProperties.put(Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
