@@ -3,7 +3,7 @@ multitenant:
   defaultTenant: github
 spring:
   datasource:
-      url: jdbc:postgresql://localhost:5432/dms_seleniumschema
+      url: jdbc:postgresql://localhost:5432/testdb
       username: admin
       password: admin
       driverClassName: org.postgresql.Driver
