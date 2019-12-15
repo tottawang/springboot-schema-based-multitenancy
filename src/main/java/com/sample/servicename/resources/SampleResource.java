@@ -50,9 +50,7 @@ public class SampleResource {
   @GET
   @Path("people2")
   public List<Object> findAllPersonByJdbcTemplate() {
-    // this might not be the right schema implementation for jdbcTemplate
-    // looks have to change every sql? this is not acceptable..
-    String sql = String.format("select * from %s.person",
+    String sql = String.format("select * from person",
         headerTenantIdentifierResolver.resolveCurrentTenantIdentifier());
     return this.executeQuery(sql, new RowMapper<Object>() {
       @Override

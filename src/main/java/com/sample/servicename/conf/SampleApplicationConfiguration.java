@@ -2,6 +2,7 @@ package com.sample.servicename.conf;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -16,8 +17,12 @@ public class SampleApplicationConfiguration {
   }
 
   @Bean
-  public JdbcTemplate centralJdbcTemplate(DataSource centralDataSource) {
-    return new JdbcTemplate(centralDataSource);
+  public JdbcTemplate centralJdbcTemplate(
+      @Autowired HeaderTenantIdentifierResolver headerTenantIdentifierResolver,
+      @Autowired DataSource datasource) throws InterruptedException {
+    SchemaBasedDatasourceProxy dataSourceProxy =
+        new SchemaBasedDatasourceProxy(datasource, headerTenantIdentifierResolver);
+    return new JdbcTemplate(dataSourceProxy);
   }
 
 }

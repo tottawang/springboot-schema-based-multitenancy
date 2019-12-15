@@ -13,8 +13,7 @@
             <maxFileSize>5MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <pattern>%date %-5level [%X{X-Request-ID}] [%thread] %mdc{queue_name} %mdc{message_id}
-                %mdc{hook_id} [%logger{10}] %msg%n
+            <pattern>%date %-5level [%X{X-Request-ID}] [%thread] [%logger{10}] %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -22,13 +21,12 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date %-5level [%X{X-Request-ID}] [%thread] %mdc{queue_name} %mdc{message_id}
-                %mdc{hook_id} [%logger{10}] %msg%n
+            <pattern>%date %-5level [%X{X-Request-ID}] [%thread] [%logger{10}] %msg%n
             </pattern>
         </encoder>
     </appender>
 
-    <logger name="com.autodesk" additivity="false">
+    <logger name="com.sample" additivity="false">
         <appender-ref ref="FILE"/>
     </logger>
 
