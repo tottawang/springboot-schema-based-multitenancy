@@ -32,8 +32,9 @@ public class SchemaBasedTenantConnectionProvider implements MultiTenantConnectio
   public Connection getConnection(String tenantIdentifier) throws SQLException {
     final Connection connection = this.getAnyConnection();
     try {
-      // connection.setSchema(tenantIdentifier);
-      connection.createStatement().execute("SET search_path to " + tenantIdentifier);
+      // what does SESSION mean here? the same connection will be reused for other schema
+      // it would call database statement SET SESSION search_path TO {schema}
+      connection.setSchema(tenantIdentifier);
     } catch (SQLException e) {
       throw new HibernateException(
           "Could not alter JDBC connection to specified schema [" + tenantIdentifier + "]", e);

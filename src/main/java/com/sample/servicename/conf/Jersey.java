@@ -13,6 +13,7 @@ public class Jersey extends ResourceConfig {
 
   public Jersey() {
     register(SampleResource.class);
+    register(MultiTenantFilter.class);
     JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);

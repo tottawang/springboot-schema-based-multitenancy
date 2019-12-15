@@ -1,5 +1,5 @@
 multitenant:
-  tenantKey: X-Person-Tenant
+  tenantKey: x-tenant
   defaultTenant: github
 spring:
   datasource:

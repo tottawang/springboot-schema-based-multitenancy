@@ -2,19 +2,14 @@ package com.sample.servicename.conf;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MultiTenantFilter implements Filter {
+public class MultiTenantFilter implements ContainerRequestFilter {
 
   @Value("${multitenant.tenantKey}")
   String tenantKey;
@@ -23,25 +18,12 @@ public class MultiTenantFilter implements Filter {
   String defaultTenant;
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
-
-  }
-
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
-    HttpServletRequest req = (HttpServletRequest) request;
-    String tenant = req.getHeader(tenantKey);
-
+  public void filter(ContainerRequestContext requestContext) throws IOException {
+    String tenant = requestContext.getHeaderString(tenantKey);
     if (tenant != null) {
-      req.setAttribute(tenantKey, tenant);
+      requestContext.setProperty(tenantKey, tenant);
     } else {
-      req.setAttribute(tenantKey, defaultTenant);
+      requestContext.setProperty(tenantKey, defaultTenant);
     }
-  }
-
-  @Override
-  public void destroy() {
-
   }
 }
