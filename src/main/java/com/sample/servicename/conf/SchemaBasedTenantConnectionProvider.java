@@ -3,24 +3,21 @@ package com.sample.servicename.conf;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
 import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class SchemaBasedTenantConnectionProvider implements MultiTenantConnectionProvider {
 
   private static final long serialVersionUID = 1L;
+  private SchemaBasedDatasourceProxy dataSourceProxy;
 
-  @Autowired
-  private DataSource dataSource;
+  public SchemaBasedTenantConnectionProvider(SchemaBasedDatasourceProxy dataSourceProxy) {
+    this.dataSourceProxy = dataSourceProxy;
+  }
 
   @Override
   public Connection getAnyConnection() throws SQLException {
-    return this.dataSource.getConnection();
+    return dataSourceProxy.getConnection();
   }
 
   @Override
@@ -30,16 +27,8 @@ public class SchemaBasedTenantConnectionProvider implements MultiTenantConnectio
 
   @Override
   public Connection getConnection(String tenantIdentifier) throws SQLException {
-    final Connection connection = this.getAnyConnection();
-    try {
-      // what does SESSION mean here? the same connection will be reused for other schema
-      // it would call database statement SET SESSION search_path TO {schema}
-      connection.setSchema(tenantIdentifier);
-    } catch (SQLException e) {
-      throw new HibernateException(
-          "Could not alter JDBC connection to specified schema [" + tenantIdentifier + "]", e);
-    }
-    return connection;
+    // tenantIdentifier is resolved in SchemaBasedDatasourceProxy with schema set
+    return getAnyConnection();
   }
 
   @Override

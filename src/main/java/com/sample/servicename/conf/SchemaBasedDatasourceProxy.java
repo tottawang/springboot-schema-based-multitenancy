@@ -61,7 +61,6 @@ public class SchemaBasedDatasourceProxy implements DataSource {
     Connection connection = dataSource.getConnection();
     setSchema(connection);
     return connection;
-
   }
 
   @Override
